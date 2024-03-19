@@ -1,0 +1,1 @@
+# Skriv koden din i denne filen. Du kan kjøre koden med å trykke på "play"-knappen i menyen over.
