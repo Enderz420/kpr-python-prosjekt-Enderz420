@@ -7,13 +7,18 @@ def bufferTid(sleep): # Buffer mulighet med dynamisk endring
 
 def difficulties(): # her har man alle difficulties
     # Print setninger
-    print("Difficulty")
+    print("Vansklighets grader")
     print('-----------')
     print('over 9 bokstaver = En baby klarer dette (Veldig enkel)')
+    bufferTid(1)
     print('9-8 bokstaver = Dette klarer alle (enkel)')
+    bufferTid(1)
     print('7-6 bokstaver = Helt ok (Normal)')
+    bufferTid(1)
     print('5-4 bokstaver = Nå begynner det å bli litt vannskelig (vanskelig)')
+    bufferTid(1)
     print('3 bokstaver eller mindre = Jesus (Mega vanskelig)')
+
 
 def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
     
@@ -163,11 +168,15 @@ def main(): # main funksjon
 
         print("----------")
         print("Hangman")
+        bufferTid(1)
         print("----------")
         print("Highscore")
+        bufferTid(1)
         print("----------")
-        print("Difficulty")
+        print("Difficulty overview")
+        bufferTid(1)
         print("----------")
+        bufferTid(1)
         print("Exit") # jon sin lille exit knapp
         print("----------")
 
@@ -180,7 +189,7 @@ def main(): # main funksjon
             hangman()
         elif NavLow == 'highscore':
             highScore('./kpr-python-prosjekt-Enderz420/highscore.txt')
-        elif NavLow == 'difficulty':
+        elif NavLow == 'difficulty' or 'difficulty overview':
             difficulties()
         elif NavLow == 'exit':
             break
