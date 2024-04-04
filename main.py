@@ -1,6 +1,7 @@
 # Skriv koden din i denne filen. Du kan kjøre koden med å trykke på "play"-knappen i menyen over.
 # Først importerer time for buffer
 import time
+import random
 
 def bufferTid(sleep): # Buffer mulighet med dynamisk endring
     time.sleep(sleep)
@@ -19,8 +20,13 @@ def difficulties(): # her har man alle difficulties
     bufferTid(1)
     print('3 bokstaver eller mindre = Jesus (Mega vanskelig)')
 
+def wordPicker(difficulty):
+    # returns a word to the assigned difficulty
+    print("Vennligst vent litt")
+
 
 def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
+    # formelen for difficulties er tall * antall liv
     
     if len(string) > 9:
         poengSum = (2 * liv)
@@ -42,6 +48,14 @@ def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
         print("Prøv igjen senere")
         exit
 
+def GivePoints(navn, points, filename): 
+    try:
+        with open(filename, 'r+a') as f:
+            f.writelines(navn, points)
+            f.close
+    except IOError:
+        print(("{filename} eksisterer ikke, kunne ikke skrive poeng sum").format())
+
 def highScore(filename): # for om man skal se highscore
     print("Velkommen!")
     print("Vennligst vent til at alt laster.")
@@ -59,20 +73,35 @@ def highScore(filename): # for om man skal se highscore
             print(innhold)
             f.close()
     except IOError:
-        print(("{filename} eksiterer ikke, prøv igjen senere").format())
-
-def rewardGiver(points): # denne skal gi deg kule poeng
-
-    bufferTid(5)
+        print(("{filename} eksisterer ikke, prøv igjen senere").format())
 
 def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
     print("Velkommen til hangman!")
     bufferTid(2)
 
-    secret_word = input("Hva er det hemmelige ordet? \n")  # brukeren gir et ord
+    print("Vennligst oppgi ja eller nei")
+    PickerCheckSum = input("Vil du velge ordet eller få et tilfeldig engelsk ord?")
 
-    if secret_word.isalpha(): # må bare være sikker
-        print("Denne ser greit ut!")
+    PickerCheckSum.islower()
+
+    if PickerCheckSum == 'ja':
+        secret_word = input("Hva er det hemmelige ordet? \n")  # brukeren gir et ord
+
+        if secret_word.isalpha(): # må bare være sikker
+            print("Denne ser greit ut!")
+    else:
+        print("Det er greit det!")
+        print("Hvilken vansklighetsgrad vil du ha?")
+        print("Hvis du er usikker på hvilke vansklighetsgrader det er vennligst skriv difficulties")
+        difficultyChecker = input("Oppgi vansklighetsgrad")
+
+        difficultyChecker.islower()
+        if difficultyChecker == "difficulties":
+            difficulties()
+        else:
+            wordPicker(difficultyChecker)
+
+
 
     bufferTid(2)
 
@@ -150,8 +179,13 @@ def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
             print("Gratulerer, du vant!")
             print(("{} var ordet!").format(chosen_word))
             print(("Du fikk {level} poeng!").format(level))
-            print("Spille en gang senere da?")
-            bufferTid(1)
+            SaveScore = input("Vil du lagre din score? Y/N? \n")
+            SaveScore.islower()
+
+            if SaveScore == 'Y' or 'yes':
+                navn = input("Vennligst oppgi navn \n")
+                GivePoints(navn, level, "./kpr-python-prosjekt-Enderz420/highscore.txt")
+                bufferTid(1)
             print("Hadet!")
             break
         else: # hvis ikke løper denne
