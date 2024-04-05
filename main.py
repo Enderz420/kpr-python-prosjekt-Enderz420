@@ -3,6 +3,7 @@
 import time
 import random
 
+
 def bufferTid(sleep): # Buffer mulighet med dynamisk endring
     time.sleep(sleep)
 
@@ -20,14 +21,53 @@ def difficulties(): # her har man alle difficulties
     bufferTid(1)
     print('3 bokstaver eller mindre = Jesus (Mega vanskelig)')
 
-def wordPicker(difficulty):
-    # returns a word to the assigned difficulty
+def loadWords(word_list): # loads words into a list
+    # loads words
     print("Vennligst vent litt")
 
+    wordlist = list()
+
+    with open(word_list) as f:
+        for line in f:
+            wordlist.append(line.strip('\n'))
+    return wordlist
+
+def wordPicker(difficulty): # Runs a check to see what difficulty the user picked
+    if difficulty == 'veldig enkel':
+        return random.choice(veryEasy)
+    elif difficulty == 'enkel':
+        return random.choice(easy)
+    elif difficulty == 'normal':
+        return random.choice(normal)
+    elif difficulty == 'vanskelig':
+        return random.choice(hard)
+    elif difficulty == 'mega vanskelig':
+        return random.choice(veryHard)
+
+wordlist = loadWords('words.txt') # Follow up code to get the words into a seperate list
+
+veryEasy = []
+easy = []
+normal = []
+hard = []
+veryHard = []
+
+for word in wordlist:
+    if len(word) > 9:
+        veryEasy.append(word)
+    elif len(word) == 9 or len(word) == 8:
+        easy.append(word)
+    elif len(word) == 7 or len(word) == 6:
+        normal.append(word)
+    elif len(word) == 5 or len(word) == 4:
+        hard.append(word)
+    elif len(word) == 3 or len(word) == 2:
+        veryHard.append(word)
+    else:
+        print("Error in appending words")
 
 def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
     # formelen for difficulties er tall * antall liv
-    
     if len(string) > 9:
         poengSum = (2 * liv)
         return poengSum
@@ -48,9 +88,9 @@ def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
         print("Prøv igjen senere")
         exit
 
-def GivePoints(navn, points, filename): 
+def GivePoints(navn, points, filename): # Gives the user points and writes it into a file
     try:
-        with open(filename, 'r+a') as f:
+        with open(filename, 'a') as f:
             f.writelines(navn, points)
             f.close
     except IOError:
@@ -75,45 +115,29 @@ def highScore(filename): # for om man skal se highscore
     except IOError:
         print(("{filename} eksisterer ikke, prøv igjen senere").format())
 
-def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
+def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
     print("Velkommen til hangman!")
     bufferTid(2)
 
-    print("Vennligst oppgi ja eller nei")
-    PickerCheckSum = input("Vil du velge ordet eller få et tilfeldig engelsk ord?")
-
-    PickerCheckSum.islower()
-
-    if PickerCheckSum == 'ja':
-        secret_word = input("Hva er det hemmelige ordet? \n")  # brukeren gir et ord
-
-        if secret_word.isalpha(): # må bare være sikker
-            print("Denne ser greit ut!")
-    else:
-        print("Det er greit det!")
-        print("Hvilken vansklighetsgrad vil du ha?")
-        print("Hvis du er usikker på hvilke vansklighetsgrader det er vennligst skriv difficulties")
-        difficultyChecker = input("Oppgi vansklighetsgrad")
-
-        difficultyChecker.islower()
-        if difficultyChecker == "difficulties":
-            difficulties()
-        else:
-            wordPicker(difficultyChecker)
-
-
-
-    bufferTid(2)
-
     attempt = int(input("Hvor mange forsøk skal du ha? \n")) # brukeren gir forsøk som blir til en int
-    
-    if attempt != int:
-        print("Det ser ut som at det ikke var et tall")
-        print("Prøv igjen senere")
-        bufferTid(1)
+
+    print("Hvilken vansklighetsgrad vil du ha?\n")
+    difficulties()
+    difficultyChecker = input("Oppgi vansklighetsgrad \n")
+
+    difficulty = ['veldig enkel', 'enkel', 'normal', 'vanskelig', 'mega vanskelig'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
+
+    difficultyChecker.islower()
+    if difficultyChecker in difficulty:
+        secret_word = wordPicker(difficultyChecker)
+        level = difficultySetter(secret_word, attempt) # setter difficulty
+        int(level)
+    else:
+        print("Det der er ugyldig")
+        print("Hadet")
         exit
 
-    level = difficultySetter(secret_word, attempt) # setter difficulty
+    bufferTid(2)
 
     while True:  # her begynner det
         guessed_letters = [] # empty list til guesses
@@ -156,7 +180,6 @@ def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
                     continue
                 elif player_guess in guessed_letters: # hvis du gjetter en bokstav igjen så løper denne
                     print("Du har allerede gjettet dette")
-                    bufferTid(1)
                     print("Gjett en annen bokstav nå da.")
                     continue
                 else:
@@ -167,18 +190,16 @@ def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
                 if player_guess == letter: # hvis bokstaven er en del av ordet løper denne
                     word_guessed[idx] = player_guess
                     print(player_guess, "er en bokstav i ordet!")
-                    bufferTid(1)
                     print(("Du har {} forsøk igjen.").format(attempt))
             if player_guess not in chosen_word: # hvis player guess ikke er i ordet så løper denne
                 attempt -= 1
-                bufferTid(1)
                 print("Det ser ut som at", player_guess, "ikke var i ordet.")
                 print(("Du har {} forsøk igjen").format(attempt))
         
         if '-' not in word_guessed: # her er vinn kondisjonen, løper hvis - ikke er i word_guessed                
             print("Gratulerer, du vant!")
             print(("{} var ordet!").format(chosen_word))
-            print(("Du fikk {level} poeng!").format(level))
+            print("Du fikk", level, "poeng!")
             SaveScore = input("Vil du lagre din score? Y/N? \n")
             SaveScore.islower()
 
@@ -196,7 +217,7 @@ def hangman(): # definerer main funskjon sånn at jon ikke blir sint på meg
             print("hadet lmao")
             break
 
-def main(): # main funksjon
+def main(): # main funksjon 
 
     while True:
 
@@ -211,7 +232,7 @@ def main(): # main funksjon
         bufferTid(1)
         print("----------")
         bufferTid(1)
-        print("Exit") # jon sin lille exit knapp
+        print("Exit") # jon sin lille exit knapp :)
         print("----------")
 
 
