@@ -44,7 +44,7 @@ def wordPicker(difficulty): # Runs a check to see what difficulty the user picke
     elif difficulty == 'mega vanskelig':
         return random.choice(veryHard)
 
-wordlist = loadWords('words.txt') # Follow up code to get the words into a seperate list
+wordlist = loadWords('/kpr-python-prosjekt-Enderz420/words.txt') # Follow up code to get the words into a seperate list
 
 veryEasy = []
 easy = []
@@ -205,7 +205,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
 
             if SaveScore == 'Y' or 'yes':
                 navn = input("Vennligst oppgi navn \n")
-                GivePoints(navn, level, "./kpr-python-prosjekt-Enderz420/highscore.txt")
+                GivePoints(navn, level, "kpr-python-prosjekt-Enderz420/highscore.txt")
                 bufferTid(1)
             print("Hadet!")
             break
