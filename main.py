@@ -44,7 +44,7 @@ def wordPicker(difficulty): # Runs a check to see what difficulty the user picke
     elif difficulty == 'mega vanskelig':
         return random.choice(veryHard)
 
-wordlist = loadWords('/kpr-python-prosjekt-Enderz420/words.txt') # Follow up code to get the words into a seperate list
+wordlist = loadWords('./kpr-python-prosjekt-Enderz420/words.txt') # Follow up code to get the words into a seperate list
 
 veryEasy = []
 easy = []
@@ -88,10 +88,10 @@ def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
         print("Prøv igjen senere")
         exit
 
-def GivePoints(navn, points, filename): # Gives the user points and writes it into a file
+def GivePoints(score, filename): # Gives the user points and writes it into a file
     try:
         with open(filename, 'a') as f:
-            f.writelines(navn, points)
+            f.writelines(score)
             f.close
     except IOError:
         print(("{filename} eksisterer ikke, kunne ikke skrive poeng sum").format())
@@ -205,7 +205,8 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
 
             if SaveScore == 'Y' or 'yes':
                 navn = input("Vennligst oppgi navn \n")
-                GivePoints(navn, level, "kpr-python-prosjekt-Enderz420/highscore.txt")
+                score = navn + str(level)
+                GivePoints(score, "./kpr-python-prosjekt-Enderz420/highscore.txt")
                 bufferTid(1)
             print("Hadet!")
             break
@@ -238,15 +239,15 @@ def main(): # main funksjon
 
         navigation = input("Hva vil du gjøre? \n")
 
-        NavLow = navigation.lower() # Konverterer til lower case
+        Nav = navigation.lower() # Konverterer til lower case
 
-        if NavLow == 'hangman':
+        if Nav == 'hangman':
             hangman()
-        elif NavLow == 'highscore':
+        elif Nav == 'highscore':
             highScore('./kpr-python-prosjekt-Enderz420/highscore.txt')
-        elif NavLow == 'difficulty' or 'difficulty overview':
+        elif Nav == 'difficulty overview':
             difficulties()
-        elif NavLow == 'exit':
+        elif Nav == 'exit':
             break
         else:
             print("Input er ikke gyldig prøv igjen.")
