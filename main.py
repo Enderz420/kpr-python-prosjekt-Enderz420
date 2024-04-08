@@ -2,7 +2,34 @@
 # Først importerer time for buffer
 import time
 import random
+from cipherDecryption import *
 
+wordlist = loadWords("./words_ciphered.txt")
+decrypt(wordlist)
+
+veryEasy = []
+easy = []
+normal = []
+hard = []
+veryHard = []
+
+def appendWords(wordlist):
+    for word in wordlist:
+        try:
+            if len(word) > 9:
+                veryEasy.append(word)
+            elif len(word) == 9 or len(word) == 8:
+                easy.append(word)
+            elif len(word) == 7 or len(word) == 6:
+                normal.append(word)
+            elif len(word) == 5 or len(word) == 4:
+                hard.append(word)
+            elif len(word) == 3 or len(word) == 2:
+                veryHard.append(word)
+        except TypeError: 
+                print("Error in appending words")
+
+appendWords(wordlist)
 
 def bufferTid(sleep): # Buffer mulighet med dynamisk endring
     time.sleep(sleep)
@@ -21,17 +48,6 @@ def difficulties(): # her har man alle difficulties
     bufferTid(1)
     print('3 bokstaver eller mindre = Jesus (Mega vanskelig)')
 
-def loadWords(word_list): # loads words into a list
-    # loads words
-    print("Vennligst vent litt")
-
-    wordlist = list()
-
-    with open(word_list) as f:
-        for line in f:
-            wordlist.append(line.strip('\n'))
-    return wordlist
-
 def wordPicker(difficulty): # Runs a check to see what difficulty the user picked
     if difficulty == 'veldig enkel':
         return random.choice(veryEasy)
@@ -43,28 +59,6 @@ def wordPicker(difficulty): # Runs a check to see what difficulty the user picke
         return random.choice(hard)
     elif difficulty == 'mega vanskelig':
         return random.choice(veryHard)
-
-wordlist = loadWords('./kpr-python-prosjekt-Enderz420/words.txt') # Follow up code to get the words into a seperate list
-
-veryEasy = []
-easy = []
-normal = []
-hard = []
-veryHard = []
-
-for word in wordlist:
-    if len(word) > 9:
-        veryEasy.append(word)
-    elif len(word) == 9 or len(word) == 8:
-        easy.append(word)
-    elif len(word) == 7 or len(word) == 6:
-        normal.append(word)
-    elif len(word) == 5 or len(word) == 4:
-        hard.append(word)
-    elif len(word) == 3 or len(word) == 2:
-        veryHard.append(word)
-    else:
-        print("Error in appending words")
 
 def difficultySetter(string, liv): # setter difficulty og gir en poeng sum
     # formelen for difficulties er tall * antall liv
@@ -121,9 +115,15 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
 
     attempt = int(input("Hvor mange forsøk skal du ha? \n")) # brukeren gir forsøk som blir til en int
 
+    if attempt is not int: # sjekker om attempt er int
+        print("Det ser ut som at dette ikke er et tall")
+        print("Prøv med et annet tall.")
+        print("Du blir sent tilbake til menyen")
+        exit
+
     print("Hvilken vansklighetsgrad vil du ha?\n")
-    difficulties()
-    difficultyChecker = input("Oppgi vansklighetsgrad \n")
+    difficulties() # viser difficulties til brukeren
+    difficultyChecker = input("Oppgi vansklighetsgrad \n").strip() # de oppgir det de vil ha 
 
     difficulty = ['veldig enkel', 'enkel', 'normal', 'vanskelig', 'mega vanskelig'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
 
@@ -159,7 +159,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
 
             try: # Spiller input
                 player_guess = input("Vennligst gjett en bokstav. \n") # får input
-                player_guess = player_guess.lower() # konverterer det til lower case
+                player_guess = player_guess.lower().strip() # konverterer det til lower case
 
             except: # Hender hvis input er invalid
                 print("Det der skal ikke være gyldig")
@@ -206,8 +206,10 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
             if SaveScore == 'Y' or 'yes':
                 navn = input("Vennligst oppgi navn \n")
                 score = navn + str(level)
-                GivePoints(score, "./kpr-python-prosjekt-Enderz420/highscore.txt")
+                GivePoints(score, "./highscore.txt")
                 bufferTid(1)
+            elif SaveScore != "Y" or 'yes':
+                print("Det er helt greit det!")
             print("Hadet!")
             break
         else: # hvis ikke løper denne
@@ -244,7 +246,7 @@ def main(): # main funksjon
         if Nav == 'hangman':
             hangman()
         elif Nav == 'highscore':
-            highScore('./kpr-python-prosjekt-Enderz420/highscore.txt')
+            highScore('./highscore.txt')
         elif Nav == 'difficulty overview':
             difficulties()
         elif Nav == 'exit':
