@@ -5,12 +5,13 @@ alfabet = string.ascii_lowercase # hele alfabetet i ascii (engelsk) abcdefghijkl
 def loadWords(word_list): # loads words into a list
     print("Vennligst vent litt")
     wordlist = list() 
-
-    with open(word_list) as f:
-        for line in f:
-            wordlist.append(line.strip('\n'))
-    return wordlist
-
+    try:    
+        with open(word_list) as f:
+            for line in f:
+                wordlist.append(line.strip('\n'))
+        return wordlist
+    except IndexError:
+        print("Listen eksister ikke prøv igjen med en ny liste")
 
 wordlist = loadWords("./words_ciphered.txt")
 
