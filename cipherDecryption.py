@@ -27,5 +27,13 @@ def decrypt(string):
             result = result + letter
     return result
 
-for word in wordlist:
-    decrypt(word)
+def decryptWords(word_list):
+    
+    decrypted_wordlist = []
+    for word in word_list:
+        decrypted_word = decrypt(word)
+        decrypted_wordlist.append(decrypted_word)
+        
+    return decrypted_wordlist
+    
+
