@@ -4,23 +4,23 @@
 # Importerer decrypt, decryptWords, og loadWords
 import time
 import random
-from cipherDecryption import decrypt_words, load_words
 from string import ascii_letters
+from cipherDecryption import decrypt_words, load_words
 
 wordlist = load_words("./words_ciphered.txt") # laster ordene i en liste
 decrypted_wordlist = list(decrypt_words(wordlist)) # putter de dekrypterte ordene i en annen liste
 
-veryEasy = [] # lister for alle vanskligetsgradene
+baby = [] # lister for alle vanskligetsgradene
 easy = []
 normal = []
 hard = []
-veryHard = []
+jesus = []
 
 def append_words(wordlist): # lagrer ordene i gitt listen for å appende de til vansklighetsgradene
-    for word in wordlist:
-        try:
+    for word in wordlist: # kjører gjennom gitt ordliste
+        try: 
             if len(word) > 9:
-                veryEasy.append(word)
+                baby.append(word)
             elif len(word) == 9 or len(word) == 8:
                 easy.append(word)
             elif len(word) == 7 or len(word) == 6:
@@ -28,11 +28,11 @@ def append_words(wordlist): # lagrer ordene i gitt listen for å appende de til 
             elif len(word) == 5 or len(word) == 4:
                 hard.append(word)
             elif len(word) == 3 or len(word) == 2:
-                veryHard.append(word)
-        except TypeError: 
-                print("Error in appending words")
+                jesus.append(word)
+        except TypeError: # catcher error om den ikke går gjennom
+                print("Error 2: Error in appending words")
 
-append_words(decrypted_wordlist)
+append_words(decrypted_wordlist) # kaller funksjonen
 
 def sleep(sleep): # Buffer mulighet med dynamisk endring
     time.sleep(sleep)
@@ -41,28 +41,33 @@ def difficulties(): # her har man alle vansklighetsgradene
     # Print setninger
     print("Vansklighets grader")
     print('-----------')
-    print('over 9 bokstaver = En baby klarer dette (Veldig enkel)')
+    print('En baby klarer dette (Baby) = over 9 bokstaver')
     sleep(1)
-    print('9-8 bokstaver = Dette klarer alle (enkel)')
+    print('Dette klarer alle (Enkel) = 9-8 bokstaver')
     sleep(1)
-    print('7-6 bokstaver = Helt ok (Normal)')
+    print('Helt ok (Normal) = 7-6 bokstaver')
     sleep(1)
-    print('5-4 bokstaver = Nå begynner det å bli litt vannskelig (vanskelig)')
+    print('Nå begynner det å bli litt vanskelig (Vanskelig) = 5-4 bokstaver')
     sleep(1)
-    print('3 bokstaver eller mindre = Jesus (Mega vanskelig)')
+    print('Jesus = 3 bokstaver eller mindre')
 
 def word_picker(difficulty): # Kjører for å sjekke så gi tilbake et ord tilordnet brukerens vansklighetsgrad
-    if difficulty == 'veldig enkel':
-        return random.choice(veryEasy)
-    elif difficulty == 'enkel':
-        return random.choice(easy)
-    elif difficulty == 'normal':
-        return random.choice(normal)
-    elif difficulty == 'vanskelig':
-        return random.choice(hard)
-    elif difficulty == 'mega vanskelig':
-        return random.choice(veryHard)
-
+    try:
+        print(f"{difficulty} valgt. Henter ord.")
+        sleep(1) # lat som at den henter noe (selv om den har allerede det)
+        if difficulty == 'baby':
+            return random.choice(baby)
+        elif difficulty == 'enkel':
+            return random.choice(easy)
+        elif difficulty == 'normal':
+            return random.choice(normal)
+        elif difficulty == 'vanskelig':
+            return random.choice(hard)
+        elif difficulty == 'jesus':
+            return random.choice(jesus)
+    except:
+        print("Error 3: Feil ved å velge ord, enten feil input ved vanskelighetsgrad eller så finnes ikke den du prøver å få")
+        exit()
 def points(string, liv): # gir en poeng sum
     # formelen for poengene er tall * antall liv som er igjen
     if len(string) > 9:
@@ -81,73 +86,73 @@ def points(string, liv): # gir en poeng sum
         poengSum = (20 * liv)
         return poengSum
     else:
-        print("Ikke gyldig")
+        print("Error 2: Input ikke gyldig")
         print("Prøv igjen senere")
-        exit
+        exit()
 
 def give_points(navn, score, filename): # Gir brukeren poeng og skriver det til highscore filen
     try:
         with open(filename, 'a') as f:
-            f.writelines(navn + '\n' + str(score) + "\n") 
+            f.writelines(navn + "\n" + str(score) + "\n") 
             f.close()
-    except IOError:
-        print(f"{filename} eksisterer ikke, kunne ikke skrive poeng sum") # Kjører hvis bruker ikke har spesifisert fil
+    except IOError: # Kjører hvis bruker ikke har spesifisert fil
+        print(f"Error 1:{filename} eksisterer ikke, kunne ikke skrive poeng sum") 
 
-def high_score(filename): # for om man skal se highscore
+def high_score(filename): # Tar in filen og prøver å lese den
     print("Velkommen!")
     print("Vennligst vent til at alt laster.")
     sleep(1)
-    print("...")
+    print(".")
+    sleep(1)
+    print("..")
     sleep(1)
     print("...")
     sleep(1)
-    print("...")
-    sleep(1)
-    print("Takk for at du ventet!")
+    print("Takk for at du ventet!") # la de vente for ingen grunn : )
     try: # denne er her for å catch errors
        with open(filename, 'r') as f:
             innhold = f.read()
             print(innhold)
             f.close()
-    except IOError:
-        print(("{filename} eksisterer ikke, prøv igjen senere").format())
+    except IOError: # hvis filen ikke eksisterer
+        print(f"Error 1: {filename} eksisterer ikke, prøv igjen senere")
+        
 
 def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
     print("Velkommen til hangman!")
     sleep(2)
-
-    attempt = int(input("Hvor mange forsøk skal du ha? \n")) # brukeren gir forsøk som blir til en int
-
-    if not isinstance(attempt, int): # sjekker om attempt er int
-        print("Det ser ut som at dette ikke er et tall")
-        print("Prøv med et annet tall.")
-        print("Du blir sent tilbake til menyen")
-        exit
-
-    print("Hvilken vansklighetsgrad vil du ha?\n")
+    try:
+        attempt = int(input("Hvor mange forsøk skal du ha? \n")) # brukeren gir forsøk som blir til en int
+        
+    except ValueError: # catcher errorer som ikke er en value
+        print("Error 4: Verdien er ugyldig vennligst prøv igjen men en ny verdi")
+        print("Du blir nå sendt ut av programmet")
+        exit()
     difficulties() # viser vansklighetsgradene til brukeren
-    difficultyChecker = input("Oppgi vansklighetsgrad \n").strip() # de oppgir det de vil ha 
+    difficultyChecker = input("Oppgi vansklighetsgrad \n").strip().lower() # de oppgir det de vil ha og konverterer til lower
 
-    difficulty = ['veldig enkel', 'enkel', 'normal', 'vanskelig', 'mega vanskelig'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
+    difficulty = ['baby', 'enkel', 'normal', 'vanskelig', 'jesus'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
 
-    difficultyChecker.islower() # konverterer til lower
-    if difficultyChecker.isascii() in difficulty: # sjekker om difficultyChecker er i difficulty listen
-        secret_word = word_picker(difficultyChecker) # velger ord basert på hva man valgte
-    else: 
-        print("Det der er ugyldig")
-        print("Hadet")
-        exit
 
-    sleep(2)
+    if difficultyChecker in difficulty: # sjekker om difficultyChecker er i difficulty listen
+        try:
+            secret_word = word_picker(difficultyChecker) # velger ord basert på hva man valgte
+            if secret_word not in difficulty:
+                print("Ingen vansklighet valgt, bruker sendes ut av program")
+                exit()
+        except:
+            print("Error 5: If-setning klarte ikke å løpe")
+            exit()
+
+    sleep(2) # late som at det den må generere noe
 
     while True:  # her begynner det
         guessed_letters = [] # tom liste til guesses
-        
-        player_guess = None # holder bokstavene til spilleren
         chosen_word = secret_word.lower()    # konverterer alle bokstavene til lower case og legger de til en variabel
+        player_guess = None # holder bokstavene til spilleren
         word_guessed = [] # liste for å gjømme ordet
-        for letters in chosen_word: 
-            word_guessed.append('-') # lager sånn at ordet er ----
+        for letters in chosen_word: # for antall bokstaver det i ordet så blir de erstattet med -
+            word_guessed.append('-') # gjør til at ordet er gjømt
 
         joined_word = None # trust the process, den skal kombinere alle ordene fra word_guessed listen senere i koden
         
@@ -163,15 +168,15 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
                 player_guess = player_guess.lower().strip() # konverterer det til lower case
 
             except: # Hender hvis input er invalid
-                print("Det der skal ikke være gyldig")
+                print("Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig.")
                 sleep(2)
                 continue
             else: 
-                if not player_guess.isascii(): # koden her kjører hvis det ikke er en bokstav
+                if not player_guess.isalpha(): # koden her kjører hvis det ikke er en bokstav
                     print("Ser ut som at det ikke er en bokstav...")
-                    sleep(3)
+                    sleep(1)
                     print("Dette er hangman...")
-                    sleep(2)
+                    sleep(1)
                     print("Vennligst prøv igjen.")
                     continue
                 elif len(player_guess) > 1: # koden kjøtrer om lengden av input er større en 1
@@ -220,34 +225,32 @@ def main(): # main funksjon
     while True: # while løkke for å være som en proto-main menu.
 
         print("----------")
-        print("Hangman")
+        print("Hangman (h)")
         sleep(1)
         print("----------")
-        print("High score")
+        print("High score (s)")
         sleep(1)
         print("----------")
-        print("Vansklighetsgrader")
+        print("Vansklighetsgrader (v)")
         sleep(1)
         print("----------")
         sleep(1)
-        print("Exit") # jon sin lille exit knapp :)
+        print("Exit (e)") # jon sin lille exit knapp :)
         print("----------")
 
 
-        navigation = input("Hva vil du gjøre? \n")
+        navigation = input("Hva vil du gjøre? \n").strip()      # Konverterer til lower case og fjerner whitespaces
 
-        navigation.lower() # Konverterer til lower case
-
-        if navigation == 'hangman':
+        if navigation.startswith('h'):
             hangman()
-        elif navigation == 'high score':
+        elif navigation.startswith('s'):
             try:   
                 high_score('./highscore.txt')
             except IOError:
-                print("Fil eksisterer ikke vennligst lag en fil med navnet 'highscore'")
-        elif navigation == 'vansklighetsgrader':
+                print("Error 1: Fil eksisterer ikke vennligst lag en fil med navnet 'highscore'")
+        elif navigation.startswith('v'):
             difficulties()
-        elif navigation == 'exit':
+        elif navigation.startswith('e'):
             break
         else:
             print("Input er ikke gyldig prøv igjen.")

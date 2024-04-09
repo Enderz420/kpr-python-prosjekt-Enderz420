@@ -11,7 +11,7 @@ def load_words(word_list): # loads words into a list
                 wordlist.append(line.strip('\n'))
         return wordlist
     except IOError:
-        print("Filen eksister ikke, vennligst prøv en annen fil")
+        print("Error 1: Filen eksister ikke, vennligst prøv en annen fil")
 
 
 def decrypt(string): # Funksjon for å dekryptere den gitte stringen 
