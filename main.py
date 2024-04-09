@@ -1,22 +1,21 @@
 # Skriv koden din i denne filen. Du kan kjøre koden med å trykke på "play"-knappen i menyen over.
 # Først importerer time for buffer
 # Importerer random for sjanse spill
-# Importerer decrypt, decryptWords, og loadWords
+# Importerer decrypt_words og load_words
 import time
 import random
-from string import ascii_letters
 from cipherDecryption import decrypt_words, load_words
 
 wordlist = load_words("./words_ciphered.txt") # laster ordene i en liste
 decrypted_wordlist = list(decrypt_words(wordlist)) # putter de dekrypterte ordene i en annen liste
 
-baby = [] # lister for alle vanskligetsgradene
+baby = [] # lister for alle vansklighetsgraden
 easy = []
 normal = []
 hard = []
 jesus = []
 
-def append_words(wordlist): # lagrer ordene i gitt listen for å appende de til vansklighetsgradene
+def append_words(wordlist): # lagrer ordene i gitt listen for å append de til vansklighetsgradene
     for word in wordlist: # kjører gjennom gitt ordliste
         try: 
             if len(word) > 9:
@@ -128,7 +127,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
         print("Error 4: Verdien er ugyldig vennligst prøv igjen men en ny verdi")
         print("Du blir nå sendt ut av programmet")
         exit()
-    difficulties() # viser vansklighetsgradene til brukeren
+    difficulties() # viser vansklighetsgrad til brukeren
     difficultyChecker = input("Oppgi vansklighetsgrad \n").strip().lower() # de oppgir det de vil ha og konverterer til lower
 
     difficulty = ['baby', 'enkel', 'normal', 'vanskelig', 'jesus'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
@@ -231,7 +230,7 @@ def main(): # main funksjon
         print("High score (s)")
         sleep(1)
         print("----------")
-        print("Vansklighetsgrader (v)")
+        print("Vansklighetsgradene (v)")
         sleep(1)
         print("----------")
         sleep(1)
