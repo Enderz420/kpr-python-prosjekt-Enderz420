@@ -60,7 +60,7 @@ def word_picker(difficulty): # Runs a check to see what difficulty the user pick
     elif difficulty == 'mega vanskelig':
         return random.choice(veryHard)
 
-def difficulty_setter(string, liv): # setter difficulty og gir en poeng sum
+def difficulty_points(string, liv): # setter difficulty og gir en poeng sum
     # formelen for difficulties er tall * antall liv
     if len(string) > 9:
         poengSum = (2 * liv)
@@ -85,7 +85,7 @@ def difficulty_setter(string, liv): # setter difficulty og gir en poeng sum
 def give_points(navn, score, filename): # Gives the user points and writes it into a file
     try:
         with open(filename, 'a') as f:
-            f.writelines(navn + '\n' + score)
+            f.writelines(navn + '\n' + str(score) + "\n")
             f.close()
     except IOError:
         print(f"{filename} eksisterer ikke, kunne ikke skrive poeng sum")
@@ -130,8 +130,6 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
     difficultyChecker.islower()
     if difficultyChecker in difficulty:
         secret_word = word_picker(difficultyChecker)
-        level = difficulty_setter(secret_word, attempt) # setter difficulty
-        int(level)
     else:
         print("Det der er ugyldig")
         print("Hadet")
@@ -197,6 +195,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
               
         
         if '-' not in word_guessed: # her er vinn kondisjonen, løper hvis - ikke er i word_guessed                
+            level = difficulty_points(secret_word, attempt)
             print("Gratulerer, du vant!")
             print(("{} var ordet!").format(chosen_word))
             print("Du fikk", level, "poeng!")
@@ -204,7 +203,6 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
             navn = input("Vennligst oppgi navn \n")
             str(level)
             give_points(navn, level, "./highscore.txt")
-
             break
         else: # hvis ikke løper denne
             print("Womp womp, du tapte. Prøv igjen så kanskje du finner ut ordet.")
