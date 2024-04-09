@@ -18,7 +18,7 @@ def decrypt(string): # Funksjon for å dekryptere den gitte stringen
     key = len(string) # Finner ut hvilken key den bruker
     result = "" # lagrer resultatet
 
-    for letter in string: # løke for å løpe gjennom alle bokstavene i stringen
+    for letter in string: # løke for å kjøre gjennom alle bokstavene i stringen
         if letter in alfabet: # hvis bokstaven er i alfabetet
             letter_index = (alfabet.find(letter) - key) % len(alfabet) # finner posisjonen til bokstaven i alfabetet og evt subtrakterer til modulo (resten)
 
@@ -29,11 +29,11 @@ def decrypt(string): # Funksjon for å dekryptere den gitte stringen
 
 def decryptWords(word_list): # for ordlisten
     
-    decrypted_wordlist = [] # liste for alle bokstavene
-    for word in word_list: # løper gjennom hver eneste ord i ordlisten
-        decrypted_word = decrypt(word) # lagrer dekrypterte ordet i en variabel
+    decrypted_wordlist = [] # liste for å lagre alle ordene som blir dekryptert
+    for word in word_list: # kjører gjennom hver eneste ord i ordlisten
+        decrypted_word = decrypt(word) # lagrer dekryptert ord i en variabel
         decrypted_wordlist.append(decrypted_word) # appender det til en liste
         
-    return decrypted_wordlist # sender tilbake listen
+    return decrypted_wordlist # sender tilbake listen som ble sendt inn
     
 
