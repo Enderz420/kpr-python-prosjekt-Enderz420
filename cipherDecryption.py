@@ -2,7 +2,7 @@ import string
 
 alfabet = string.ascii_lowercase # hele alfabetet i ascii (engelsk) abcdefghijklmnopqrstuvwxyz
 
-def loadWords(word_list): # loads words into a list
+def load_words(word_list): # loads words into a list
     print("Vennligst vent litt")
     wordlist = list() 
     try:    
@@ -27,7 +27,7 @@ def decrypt(string): # Funksjon for å dekryptere den gitte stringen
             result = result + letter 
     return result # returnerer result til starten
 
-def decryptWords(word_list): # for ordlisten
+def decrypt_words(word_list): # for ordlisten
     
     decrypted_wordlist = [] # liste for å lagre alle ordene som blir dekryptert
     for word in word_list: # kjører gjennom hver eneste ord i ordlisten
