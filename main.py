@@ -52,8 +52,8 @@ def difficulties(): # her har man alle vansklighetsgradene
 
 def word_picker(difficulty): # Kjører for å sjekke så gi tilbake et ord tilordnet brukerens vansklighetsgrad
     try:
-        print(f"{difficulty} valgt. Henter ord.")
-        sleep(1) # lat som at den henter noe (selv om den har allerede det)
+        print(f"{difficulty} valgt. Henter ord.") # later som at den henter noe (selv om den har allerede det)
+        sleep(1) 
         if difficulty == 'baby':
             return random.choice(baby)
         elif difficulty == 'enkel':
