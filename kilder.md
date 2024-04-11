@@ -8,3 +8,5 @@
 - GeeksforGeeks File Writing (Lesedato: 24.03.24) : https://www.geeksforgeeks.org/writing-to-file-in-python/
 - Stackoverflow Loading wordlists into python (Lesedato: 04.04.24) : [donvan på Stackoverflow] https://stackoverflow.com/questions/29666126/how-to-load-a-word-list-into-python
 - Teachen CSP Python Caesar Cipher (Lesedato: 08.04.24) : https://teachen.info/cspp/unit4/lab04-02.html
+- freeCodeCamp Kolade Kris (Lesedato: 11.04.24) : https://www.freecodecamp.org/news/python-switch-statement-switch-case-example/
+- 
