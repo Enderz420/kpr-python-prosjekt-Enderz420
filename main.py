@@ -110,7 +110,7 @@ def high_score(filename): # Tar in filen og prøver å lese den
        with open(filename, 'r') as f: # åpner filen med samme navn i read modus
             print(f.read()) # printer filen
             f.close() # lukker filen
-    except IOError: # hvis filen ikke eksisterer
+    except IOError: # hvis filen ikke eksisterer så løper denne
         print(f"Error 1: {filename} eksisterer ikke, prøv igjen senere")
         
 
