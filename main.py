@@ -1,5 +1,6 @@
 # Skriv koden din i denne filen. Du kan kjøre koden med å trykke på "play"-knappen i menyen over.
 # takk jon for tipset : )
+# denne komentaren eksisterer for å sjekke om mine commit access har blitt removed, hvis denne går gjennom så hei hei!
 import time # Først importerer time for buffer
 import random # Importerer random for sjanse spill
 from cipherDecryption import decrypt_words, load_words # Importerer decrypt_words og load_words
