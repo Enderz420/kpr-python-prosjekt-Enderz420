@@ -254,6 +254,8 @@ def main(): # main funksjon
                 difficulties()
             case("e"):
                 exit()
+            case other: # som en liten jack of all trades som tar alt som ikke blir matchet
+                print("Dette er ikke en gyldig input. \nPrøv å gi en gyldig input denne gang.")
         
 
 if __name__ == '__main__':
