@@ -169,7 +169,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
                 player_guess = player_guess.lower().strip() # konverterer det til lower case
 
             except: # Hender hvis input er invalid
-                print("Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig.")
+                print("Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig som en bokstav.")
                 sleep(2)
                 continue
             else: # hvis den ikke ble catchet så løper alt under
@@ -242,10 +242,10 @@ def main(): # main funksjon
 
         navigation = input("Hva vil du gjøre? \n").strip()      # Konverterer til lower case og fjerner whitespaces
 
-        match navigation:
-            case "h":
+        match navigation: # denne koden her tar input også matcher den med case inputen
+            case "h": # hvis navigation matcher H så løper hangman funksjonen
                 hangman()
-            case("s"):
+            case("s"): # det samme hender med denne hvis case er S så løper try except linjene
                 try:   
                     high_score('./highscore.txt')
                 except IOError:
