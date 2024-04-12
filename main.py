@@ -34,8 +34,8 @@ append_words(decrypted_wordlist) # kaller funksjonen
 def sleep(sleep): # Buffer mulighet med dynamisk endring
     time.sleep(sleep)
 
-def difficulties(): # her har man alle vansklighetsgradene
-    # Print setninger
+def difficulties(): # her har man en funksjon for vansklighetsgrader
+    # Print setninger som printer alle vansklighetsgradene
     print("Vansklighets grader")
     print('-----------')
     print('En baby klarer dette (Baby) = over 9 bokstaver')
@@ -65,7 +65,7 @@ def word_picker(difficulty): # Kjører for å sjekke så gi tilbake et ord tilor
     except:
         print("Error 3: Feil ved å velge ord, enten feil input ved vanskelighetsgrad eller så finnes ikke den du prøver å få")
         exit()
-def points(string, liv): # gir en poeng sum
+def points(string, liv): # funksjon som gir poengsum
     # formelen for poengene er tall * antall liv som er igjen
     if len(string) > 9:
         poengSum = (2 * liv)
