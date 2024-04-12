@@ -240,7 +240,7 @@ def main(): # main funksjon
         print("----------")
 
 
-        navigation = input("Hva vil du gjøre? \n").strip()      # Konverterer til lower case og fjerner whitespaces
+        navigation = input("Hva vil du gjøre? \n").strip()      # Tar din input og navigerer deg dersom du skriver rett. Også fjerner whitespaces
 
         match navigation: # denne koden her tar input også matcher den med case inputen
             case "h": # hvis navigation matcher H så løper hangman funksjonen
