@@ -1,4 +1,10 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/VKr3Yca4)
+# Info
+Dette er et Python prosjekt der vi skulle lage Hangman for Læreren vår.
+Måtte salvage for å få dette fram siden Github Classroom er en liten rakker.
+Nyt dette hvordan man vil, fritt til å klone, endre, eller hva en man vil.
+
+---
+
 # Hangman
 
 **TIPS**: Dette er en **Markdown**-fil!
