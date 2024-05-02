@@ -5,6 +5,7 @@
 import time # Først importerer time for buffer
 import random # Importerer random for sjanse spill
 from cipherDecryption import decrypt_words, load_words # Importerer decrypt_words og load_words
+from colorama import init, Fore
 
 wordlist = load_words("./words_ciphered.txt") # laster ordene i en liste
 decrypted_wordlist = list(decrypt_words(wordlist)) # putter de dekrypterte ordene i en annen liste
@@ -40,15 +41,15 @@ def difficulties(): # her har man en funksjon for vansklighetsgrader
     # Print setninger som printer alle vansklighetsgradene
     print("Vansklighets grader")
     print('-----------')
-    print('En baby klarer dette (Baby) = over 9 bokstaver')
+    print(Fore.LIGHTGREEN_EX + 'En baby klarer dette (Baby) = over 9 bokstaver')
     sleep(1)
-    print('Dette klarer alle (Enkel) = 9-8 bokstaver')
+    print(Fore.GREEN + 'Dette klarer alle (Enkel) = 9-8 bokstaver')
     sleep(1)
-    print('Helt ok (Normal) = 7-6 bokstaver')
+    print(Fore.BLUE + 'Helt ok (Normal) = 7-6 bokstaver')
     sleep(1)
-    print('Nå begynner det å bli litt vanskelig (Vanskelig) = 5-4 bokstaver')
+    print(Fore.LIGHTRED_EX + 'Nå begynner det å bli litt vanskelig (Vanskelig) = 5-4 bokstaver')
     sleep(1)
-    print('Jesus = 3 bokstaver eller mindre')
+    print(Fore.BLACK + 'Jesus (Jesus) = 3 bokstaver eller mindre')
 
 def word_picker(difficulty): # Kjører for å sjekke så gi tilbake et ord tilordnet brukerens vansklighetsgrad
     try:
@@ -117,7 +118,7 @@ def high_score(filename): # Tar in filen og prøver å lese den
         
 
 def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
-    print("Velkommen til hangman!")
+    print(Fore.GREEN + "Velkommen til hangman!")
     sleep(2)
     try:
         attempt = int(input("Hvor mange forsøk skal du ha? Ikke noe mer en 10! \n")) # brukeren gir forsøk som blir til en int
@@ -171,12 +172,12 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
                 player_guess = player_guess.lower().strip() # konverterer det til lower case
 
             except: # Hender hvis input er invalid
-                print("Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig som en bokstav.")
+                print(Fore.RED + "Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig som en bokstav.")
                 sleep(2)
                 continue
             else: # hvis den ikke ble catchet så løper alt under
                 if not player_guess.isalpha(): # koden her kjører hvis det ikke er en bokstav
-                    print("Ser ut som at det ikke er en bokstav...")
+                    print(Fore.LIGHTRED_EX + "Ser ut som at det ikke er en bokstav...")
                     sleep(1)
                     print("Dette er hangman...")
                     sleep(1)
@@ -188,7 +189,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
                     print("Prøv igjen")
                     continue # fortsetter koden
                 elif player_guess in guessed_letters: # hvis du gjetter samme bokstav så kjører denne
-                    print("Du har allerede gjettet dette")
+                    print(Fore.LIGHTGREEN_EX + "Du har allerede gjettet dette")
                     print("Gjett en annen bokstav nå da.")
                     continue # fortsetter koden
                 else: # hvis ingen av kondisjonene over ble fylt så løper under
@@ -198,27 +199,27 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
             for idx, letter in enumerate(chosen_word): # kjører gjennom hver bokstav og sjekker om den er i ordet
                 if player_guess == letter: # sjekker om det spilleren gjettet er en bokstav i ordet
                     word_guessed[idx] = player_guess #  sjekker hvor den er plassert 
-                    print(player_guess, "er en bokstav i ordet!") # printer bokstaven spilleren gjettet
+                    print(Fore.GREEN + player_guess, "er en bokstav i ordet!") # printer bokstaven spilleren gjettet
                   
             if player_guess not in chosen_word: # hvis player guess ikke er i ordet så kjører denne
                 attempt -= 1 # fjerner et liv
-                print("Det ser ut som at", player_guess, "ikke var i ordet.") 
+                print(Fore.RED + f"Det ser ut som at {player_guess} ikke var i ordet.") 
               
         
         if '-' not in word_guessed: # her er vinn kondisjonen, kjører hvis - ikke er i word_guessed                
             score = points(secret_word, attempt) # lagrer poengsum i score variablen
-            print("Gratulerer, du vant!")
-            print(("{} var ordet!").format(chosen_word))
-            print("Du fikk", score, "poeng!") 
+            print(Fore.GREEN + "Gratulerer, du vant!")
+            print(Fore.GREEN + ("{} var ordet!").format(chosen_word))
+            print(Fore.GREEN + f"Du fikk {score} poeng!") 
 
             navn = input("Vennligst oppgi navn \n") # oppgi navn 
             str(score) # konverter score til string
             give_points(navn, score, "./highscore.txt") # kjører give_points() funksjonen med navn og score som inputs
             break # får deg ut av løkken og tilbake til main()
         else: # hvis ikke kjører denne
-            print("Womp womp, du tapte. Prøv igjen så kanskje du finner ut ordet.")
+            print(Fore.RED + "Womp womp, du tapte. Prøv igjen så kanskje du finner ut ordet.")
             sleep(3)
-            print(("ordet var {} lol").format(chosen_word))
+            print(Fore.RED + ("ordet var {} lol").format(chosen_word))
             sleep(5)
             print("hadet lmao")
             break # får deg ut av løkken og tilbake til main()
@@ -226,19 +227,19 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
 def main(): # main funksjon 
 
     while True: # while løkke for å være som en proto-main menu.
-
+        init(autoreset=True)
         print("----------")
-        print("Hangman (h)")
+        print(Fore.GREEN + "Hangman (h)")
         sleep(1)
         print("----------")
-        print("High score (s)")
+        print(Fore.CYAN + "High score (s)")
         sleep(1)
         print("----------")
-        print("Vansklighetsgradene (v)")
+        print(Fore.BLUE + "Vansklighetsgradene (v)")
         sleep(1)
         print("----------")
         sleep(1)
-        print("Exit (e)") # jon sin lille exit knapp :)
+        print(Fore.RED + "Exit (e)") # jon sin lille exit knapp :)
         print("----------")
 
 
