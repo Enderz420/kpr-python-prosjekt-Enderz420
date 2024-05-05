@@ -136,16 +136,15 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
     difficulty = ['baby', 'enkel', 'normal', 'vanskelig', 'jesus'] # for å gjøre det mye enklere til å sjekke om de skriver riktig
 
 
-    match difficultyChecker: # hvis difficultyChecker matcher
-        case difficulty: # denne så løper denne
-            try:
-                secret_word = word_picker(difficultyChecker) # velger ord basert på hva man valgte
-                if difficultyChecker not in difficulty: # sjekker om difficultien finnes
-                    print("Ingen vansklighet valgt, bruker sendes ut av program")
-                    exit() # kaster deg ut av programmet
-            except: # hvis den ikke går så løper denne og gir error
-                print("Error 5: If-setning klarte ikke å løpe. Sjekk koden på var'difficultyChecker")
-                exit() # kaster deg ut av programmet
+
+    try:
+        if difficultyChecker not in difficulty: # sjekker om difficultien finnes
+            print("Ingen vansklighet valgt, bruker sendes ut av program")
+            exit() # kaster deg ut av programmet
+        secret_word = word_picker(difficultyChecker) # velger ord basert på hva man valgte
+    except: # hvis den ikke går så løper denne og gir error
+            print("Error 5: If-setning klarte ikke å løpe. Sjekk koden på var'difficultyChecker")
+            exit() # kaster deg ut av programmet
         
 
     sleep(2) # late som at det den må generere noe
