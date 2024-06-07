@@ -65,7 +65,7 @@ def word_picker(difficulty): # Kjører for å sjekke så gi tilbake et ord tilor
             return random.choice(hard) # returnerer random ord fra hard listen
         elif difficulty == 'jesus':
             return random.choice(jesus) # returnerer random ord fra jesus listen
-    except:
+    except None:
         print("Error 3: Feil ved å velge ord, enten feil input ved vanskelighetsgrad eller så finnes ikke den du prøver å få")
         exit()
 def points(string, liv): # funksjon som gir poengsum
@@ -142,7 +142,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
             print("Ingen vansklighet valgt, bruker sendes ut av program")
             exit() # kaster deg ut av programmet
         secret_word = word_picker(difficultyChecker) # velger ord basert på hva man valgte
-    except: # hvis den ikke går så løper denne og gir error
+    except None: # hvis den ikke går så løper denne og gir error
             print("Error 5: If-setning klarte ikke å løpe. Sjekk koden på var'difficultyChecker")
             exit() # kaster deg ut av programmet
         
@@ -170,7 +170,7 @@ def hangman(): # definerer hangman funskjon sånn at jon ikke blir sint på meg
                 player_guess = input("Vennligst gjett en bokstav. \n") # får input
                 player_guess = player_guess.lower().strip() # konverterer det til lower case
 
-            except: # Hender hvis input er invalid
+            except TypeError: # Hender hvis input er invalid
                 print(Fore.RED + "Det der skal ikke være gyldig...\nPrøv å skrive noe gyldig som en bokstav.")
                 sleep(2)
                 continue
@@ -256,7 +256,7 @@ def main(): # main funksjon
                 difficulties()
             case("e"):
                 exit()
-            case other: # som en liten jack of all trades som tar alt som ikke blir matchet
+            case _: # som en liten jack of all trades som tar alt som ikke blir matchet
                 print("Dette er ikke en gyldig input. \nPrøv å gi en gyldig input denne gang.")
         
 
